@@ -92,6 +92,12 @@ jobs:
     #  run: terraform fmt -check
     #  working-directory: ${{env.working-directory}}
 
+    - name: Authenticate gcloud
+      run: gcloud auth application-default login
+      working-directory: ${{env.working-directory}}
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan
