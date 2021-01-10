@@ -66,18 +66,11 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: Login to GCP
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-      with:
-        version: '281.0.0'
-        service_account_key: ${{ secrets.GCS_TERRAFORM_GITHUB_SA }}
-        export_default_credentials: true
-        
+      
     - uses: actions-hub/gcloud@master
       env:
         PROJECT_ID: test
-        APPLICATION_CREDENTIALS: ${{ envs.GOOGLE_APPLICATION_CREDENTIALS }}
+        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       with:
         args: info
 
