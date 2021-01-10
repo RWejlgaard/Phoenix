@@ -4,4 +4,12 @@ provider "google" {
 
 }
 
+terraform {
+  backend "remote" {
+    organization = "rwejlgaard"
 
+    workspaces {
+      name = "phoenix"
+    }
+  }
+}

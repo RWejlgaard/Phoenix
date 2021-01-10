@@ -9,7 +9,7 @@ def main(request):
     except AttributeError:
         data = request
 
-    ret = ""
+    ret = "test"
 
     print(ret)
     return ret

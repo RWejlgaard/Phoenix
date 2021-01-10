@@ -28,7 +28,7 @@ resource "google_cloudfunctions_function" "function" {
   }
 
   environment_variables = {
-    openweathermap-api-key =
+    openweathermap-api-key = var.openweathermap-api-key
   }
 }
 
