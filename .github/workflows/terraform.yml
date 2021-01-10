@@ -73,6 +73,13 @@ jobs:
         version: '281.0.0'
         service_account_key: ${{ secrets.GCS_TERRAFORM_GITHUB_SA }}
         export_default_credentials: true
+        
+    - uses: actions-hub/gcloud@master
+      env:
+        PROJECT_ID: test
+        APPLICATION_CREDENTIALS: ${{ envs.GOOGLE_APPLICATION_CREDENTIALS }}
+      with:
+        args: info
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
