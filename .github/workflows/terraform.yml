@@ -85,7 +85,7 @@ jobs:
       run: terraform init
       working-directory: ${{env.working-directory}}
       env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     # Checks that all Terraform configuration files adhere to a canonical format
     #- name: Terraform Format
@@ -97,7 +97,7 @@ jobs:
       run: terraform plan
       working-directory: ${{env.working-directory}}
       env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       # On push to master, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
@@ -106,4 +106,4 @@ jobs:
       run: terraform apply -auto-approve
       working-directory: ${{env.working-directory}}
       env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
