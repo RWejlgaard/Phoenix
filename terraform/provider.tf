@@ -9,7 +9,7 @@ terraform {
     organization = "rwejlgaard"
 
     workspaces {
-      name = "phoenix"
+      name = "phoenix-gcp"
     }
   }
 }
