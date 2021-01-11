@@ -66,13 +66,13 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: Login to GCP
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      
+    - uses: actions-hub/gcloud@master
+      env:
+        PROJECT_ID: test
+        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       with:
-        version: '281.0.0'
-        service_account_key: ${{ secrets.GCS_TERRAFORM_GITHUB_SA }}
-        export_default_credentials: true
+        args: info
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -84,16 +84,26 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: ${{env.working-directory}}
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
+    #- name: Terraform Format
+    #  run: terraform fmt -check
+    #  working-directory: ${{env.working-directory}}
+
+    - name: Authenticate gcloud
+      run: gcloud auth application-default login --quiet
       working-directory: ${{env.working-directory}}
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -var openweathermap-api-key="${{ secrets.OPENWEATHERMAP_API_KEY }}"
+      run: terraform plan
       working-directory: ${{env.working-directory}}
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       # On push to master, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
@@ -101,3 +111,5 @@ jobs:
       if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       run: terraform apply -auto-approve
       working-directory: ${{env.working-directory}}
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
