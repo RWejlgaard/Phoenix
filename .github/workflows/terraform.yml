@@ -54,6 +54,9 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
     env:
       working-directory: ./terraform
 
@@ -67,12 +70,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
-    - uses: actions-hub/gcloud@master
-      env:
-        PROJECT_ID: test
-        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+#     - uses: actions-hub/gcloud@master
+#       env:
+#         PROJECT_ID: test
+#         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+#       with:
+#         args: info
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        args: info
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Build lambda zips
+      run: ./build.sh
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -92,11 +103,11 @@ jobs:
     #  run: terraform fmt -check
     #  working-directory: ${{env.working-directory}}
 
-    - name: Authenticate gcloud
-      run: gcloud auth application-default login --quiet
-      working-directory: ${{env.working-directory}}
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+#     - name: Authenticate gcloud
+#       run: gcloud auth application-default login --quiet
+#       working-directory: ${{env.working-directory}}
+#       env:
+#         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
