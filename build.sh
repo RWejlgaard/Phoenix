@@ -2,8 +2,6 @@
 set -e
 ORIGINAL_DIR=`pwd`
 
-rm $ORIGINAL_DIR/terraform/files/*.zip
-
 for d in ./functions/* ; do
    cd $ORIGINAL_DIR/$d
    rm -rf $ORIGINAL_DIR/$d/venv
