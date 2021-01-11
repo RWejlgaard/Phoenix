@@ -67,12 +67,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
-    - uses: actions-hub/gcloud@master
-      env:
-        PROJECT_ID: test
-        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-      with:
-        args: info
+#     - uses: actions-hub/gcloud@master
+#       env:
+#         PROJECT_ID: test
+#         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+#       with:
+#         args: info
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -92,11 +92,11 @@ jobs:
     #  run: terraform fmt -check
     #  working-directory: ${{env.working-directory}}
 
-    - name: Authenticate gcloud
-      run: gcloud auth application-default login --quiet
-      working-directory: ${{env.working-directory}}
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+#     - name: Authenticate gcloud
+#       run: gcloud auth application-default login --quiet
+#       working-directory: ${{env.working-directory}}
+#       env:
+#         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
