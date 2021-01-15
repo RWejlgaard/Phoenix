@@ -10,9 +10,6 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
     env:
       working-directory: ./terraform
 
@@ -25,18 +22,11 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
-      
-#     - uses: actions-hub/gcloud@master
-#       env:
-#         PROJECT_ID: test
-#         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-#       with:
-#         args: info
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.8"
     
     - name: Build lambda zips
       run: ./build.sh
@@ -54,17 +44,6 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    #- name: Terraform Format
-    #  run: terraform fmt -check
-    #  working-directory: ${{env.working-directory}}
-
-#     - name: Authenticate gcloud
-#       run: gcloud auth application-default login --quiet
-#       working-directory: ${{env.working-directory}}
-#       env:
-#         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan
@@ -80,3 +59,15 @@ jobs:
       working-directory: ${{env.working-directory}}
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+    - name: Send mail
+      uses: dawidd6/action-send-mail@v2
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{secrets.MAIL_USERNAME}}
+        password: ${{secrets.MAIL_PASSWORD}}
+        subject: ${{github.repository}} terraform applied successfully
+        body: ${{github.repository}} terraform applied successfully!
+        to: pez@pez.sh
+        from: ${{secrets.MAIL_USERNAME}}
