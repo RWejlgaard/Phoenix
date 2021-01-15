@@ -1,0 +1,30 @@
+swagger: '2.0'
+info:
+  title: Phoenix API
+  description: Collection of functions to be used to automate my life
+  version: 1.0.0
+host: europe-west2-rwejlgaard.cloudfunctions.net
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /weather:
+    post:
+      parameters:
+        - name: data
+          schema:
+            example: |
+              {}
+          in: body
+      summary: Shows current weather information 
+      operationId: weather
+      x-google-backend:
+        address: https://europe-west2-rwejlgaard.cloudfunctions.net
+        protocol: h2
+
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
