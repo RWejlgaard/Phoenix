@@ -1,6 +1,6 @@
 
 resource "google_storage_bucket_object" "archive" {
-  name   = var.function_name
+  name   = "${var.function_name}-${timestamp()}"
   bucket = var.staging_bucket_name
   source = "${path.root}/files/${var.function_name}.zip"
 }

@@ -1,6 +1,7 @@
 import urllib.request as r
 import os
 import json
+from flask import abort
 
 
 def weather():
@@ -22,15 +23,10 @@ The current temperature is {main_temp} which feels like {main_feels_like}
 
 
 def main(request):
-    try:
-        data = request.get_json()
-    except AttributeError:
-        data = request
-
-    ret = weather()
-
-    print(ret)
-    return ret
+    if request.method == 'GET':
+        return weather(), 200
+    else:
+        return abort(405)
 
 
 if __name__ == '__main__':
