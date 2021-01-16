@@ -60,14 +60,14 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
-    - name: Send mail
-      uses: dawidd6/action-send-mail@v2
-      with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        username: ${{secrets.MAIL_USERNAME}}
-        password: ${{secrets.MAIL_PASSWORD}}
-        subject: ${{github.repository}} terraform applied successfully
-        body: ${{github.repository}} terraform applied successfully!
-        to: pez@pez.sh
-        from: ${{secrets.MAIL_USERNAME}}
+#    - name: Send mail
+#      uses: dawidd6/action-send-mail@v2
+#      with:
+#        server_address: smtp.gmail.com
+#        server_port: 465
+#        username: ${{secrets.MAIL_USERNAME}}
+#        password: ${{secrets.MAIL_PASSWORD}}
+#        subject: ${{github.repository}} terraform applied successfully
+#        body: ${{github.repository}} terraform applied successfully!
+#        to: pez@pez.sh
+#        from: ${{secrets.MAIL_USERNAME}}
