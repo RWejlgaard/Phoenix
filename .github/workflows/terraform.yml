@@ -64,4 +64,5 @@ jobs:
       uses: distributhor/workflow-webhook@v1
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}
+        webhook_secret: ""
         data: '{ "value1": "GitHub Actions ✅", "value2" : "Phoenix terraform completed successfully" }'
