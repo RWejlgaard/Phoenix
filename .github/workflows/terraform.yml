@@ -60,9 +60,9 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
-    - name: Invoke deployment hook
-      uses: distributhor/workflow-webhook@v1
-      env:
-        webhook_url: ${{ secrets.WEBHOOK_URL }}
-        webhook_secret: ""
+    - name: Webhook notification
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: ${{ secrets.WEBHOOK_URL }}
+        method: 'POST'
         data: '{ "value1": "GitHub Actions ✅", "value2" : "Phoenix terraform completed successfully" }'

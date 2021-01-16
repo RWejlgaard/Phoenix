@@ -8,7 +8,7 @@ class ifttt_adapter:
             "value2": message
         }
 
-        url = "https://maker.ifttt.com/trigger/gp/with/key/***REMOVED***"
+        url = "https://maker.ifttt.com/trigger/gp/with/key/d6bVq32ioOJtEmaO2AYSQK"
 
         params = json.dumps(payload).encode('utf8')
         req = r.Request(url, data=params, headers={'content-type': 'application/json'})
